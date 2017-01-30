@@ -42,8 +42,8 @@ def main():
         i = float(i)
         labels.append(i)
 
-    X = np.array(values)
-    Y = np.array(labels)
+    X = np.array(values, dtype=np.float32)
+    Y = np.array(labels, dtype=np.float32)
 
     print()
     print('Linear Regression:')
@@ -54,12 +54,22 @@ def main():
         print('{}: {}'.format(k, wk))
 
     print()
-    print('Rank Correlation')
+    print('Rank Correlation:')
     w = spearmanr(X, Y)[0][:-1, -1]
     kw = list(zip(keys, w))
     kw = sorted(kw, key=lambda x: np.abs(x[1]), reverse=True)
     for k, wk in kw:
         print('{}: {}'.format(k, wk))
 
+    XY = sorted(list(zip(X, Y)), key=lambda x: x[1], reverse=True)
+    best_label = XY[0][1]
+    print()
+    print('Best Configs (label = {}): '.format(best_label))
+    for x, y in XY:
+        if y != best_label:
+            break
+        for k, v in zip(keys, x):
+            print('{}: {}'.format(k, v), end=' ')
+        print()
 if __name__ == '__main__':
     main()
