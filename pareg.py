@@ -27,10 +27,26 @@ def main():
                 vals[k] = []
             if v == 'True':
                 v = 1.
-            if v == 'False':
+            elif v == 'False':
                 v = 0.
             vals[k].append(v)
     vals = {k: v for k, v in vals.items() if len(set(v)) > 1}
+    vals2 = {}
+    for k, v in vals.items():
+        try:
+            vals2[k] = [float(vi) for vi in v]
+        except:
+            vs = list(set(v))
+            vd = dict(zip(vs, range(len(vs))))
+            v2 = [vd[vi] for vi in v]
+            vals2[k] = v2
+            print()
+            print('coding for {}:'.format(k))
+            for kk, vv in vd.items():
+                print('{}: {}'.format(kk, vv))
+
+    vals = vals2
+
     values = list(zip(*vals.values()))
     keys = list(vals.keys())
     labels = []
